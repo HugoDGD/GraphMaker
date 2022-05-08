@@ -1,4 +1,6 @@
 import os
+from pydoc import doc
+import re
 
 class Formater:
     """
@@ -46,7 +48,6 @@ class Formater:
                     
                     elif type == "replace":
                         replace = args.split(" + ")
-                        print(replace)
 
                 self.funcDict[source] = createFormatFunction(source, target, sep, header_line, x_column, ignore_prefix, replace)
 
@@ -86,6 +87,27 @@ def findNthOccurences(l, n, element):
     
     return -1
 
+# def replaceWithWildCard(data, old, new):
+#     oldLen = len(old)
+
+#     iOld = old.find("(.*)")
+
+#     match = re.search(old,data)
+
+#     result = ""
+#     lastIndex=0
+#     while match != None:
+#         index = match.start()
+
+#         newNew = new.replace("(.*)",data[index+iOld:index+oldLen-iOld+4])
+#         newNewLen = len(newNew)
+
+#         result += data[lastIndex:index]+newNew
+#         lastIndex = index+newNewLen
+#         match = re.search(old,data)
+
+#     return result
+
 def createFormatFunction(source, target, sep, header_line=0, x_column=0, ignore_prefix='', replace=[]):
     """
     Create a function to format a file to a certain target format
@@ -104,7 +126,6 @@ def createFormatFunction(source, target, sep, header_line=0, x_column=0, ignore_
 
         with open(path) as f:
             data = f.read()
-
         
 
         if header_line != 0:
@@ -121,8 +142,7 @@ def createFormatFunction(source, target, sep, header_line=0, x_column=0, ignore_
 
         for replacement in replace:
             old,new = replacement.split("->")
-
-            data = data.replace(old, new)
+            data = re.sub(str(old), str(new), data)
 
         with open(name+"."+target, "w") as f:
             f.write(data)
@@ -134,4 +154,4 @@ def createFormatFunction(source, target, sep, header_line=0, x_column=0, ignore_
 if __name__ == "__main__":
     f = Formater("format_conversion.txt")
 
-    f.format("Data/mono.scp")
+    f.format("Data/integrateur3.bd_lt")
