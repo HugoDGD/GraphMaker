@@ -15,22 +15,40 @@ class Formater:
             for line in f.readlines():
                 source = None
                 target = None
+
+                sep = ','
+
                 header_line = 0
+                x_column = 0
+                
                 ignore_prefix = ''
+                replace = []
 
                 for element in line.split("|"):
+                    if element == '\n' or element == '': continue
+
                     type, args = element.split(":")
                     
                     if type == "format":
                         source,target = args.split(",")
 
+                    elif type == "sep":
+                        sep = args
+
                     elif type == "header":
                         header_line = int(args)
 
+                    elif type == "x_column":
+                        x_column = int(args)
+
                     elif type == "ignore":
                         ignore_prefix = args
+                    
+                    elif type == "replace":
+                        replace = args.split(" + ")
+                        print(replace)
 
-                self.funDict[source] = createFormatFunction(source, target, header_line, ignore_prefix)
+                self.funcDict[source] = createFormatFunction(source, target, sep, header_line, x_column, ignore_prefix, replace)
 
 
 
@@ -46,13 +64,7 @@ class Formater:
 
         name,extension = path.split(".")
 
-        if extension != self.source:
-            print("Source format doesn't correspond")
-            return -2
-
-        with open(path) as f:
-            data = f.read()
-            return self.funcDict[extension](data)
+        return self.funcDict[extension](path)
 
 ##############################################################################################
 
@@ -69,12 +81,12 @@ def findNthOccurences(l, n, element):
         if l[i:i+size] == element:
             count +=1
             
-        if count == n:
+        if count >= n:
             return i
     
     return -1
 
-def createFormatFunction(source, target, header_line=0, ignore_prefix='', replace=[]):
+def createFormatFunction(source, target, sep, header_line=0, x_column=0, ignore_prefix='', replace=[]):
     """
     Create a function to format a file to a certain target format
     """
@@ -93,7 +105,19 @@ def createFormatFunction(source, target, header_line=0, ignore_prefix='', replac
         with open(path) as f:
             data = f.read()
 
-        data = data[findNthOccurences(data, header_line, "\n")::] #Ignore the lines before the headers
+        
+
+        if header_line != 0:
+            data = data[findNthOccurences(data, header_line-1, "\n")+1::] #Ignore the lines before the headers
+
+        if x_column != 0:
+            newData = ""
+            for line in data.split():
+                newData += line[findNthOccurences(line, x_column, sep)+1::]+"\n"
+
+            data = newData
+
+        data = data.replace(sep, ",")
 
         for replacement in replace:
             old,new = replacement.split("->")
@@ -106,3 +130,8 @@ def createFormatFunction(source, target, header_line=0, ignore_prefix='', replac
         return 0
     
     return result 
+
+if __name__ == "__main__":
+    f = Formater("format_conversion.txt")
+
+    f.format("Data/mono.scp")

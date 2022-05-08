@@ -1,2 +1,4 @@
-format:scp,data|header:8|ignore:;
-format:bd_scp,bd_data|header:8|ignore:;
+format:scp,data|sep:,|header:8|ignore:;|x_column:1|
+format:bd_scp,bd_data|sep:,|header:8|ignore:;|x_column:1|
+format:lt,data|sep:	|header:0|x_column:0|
+format:csv,data|sep:;|header:0|x_column:0|
