@@ -30,7 +30,7 @@ class Formater:
                     elif type == "ignore":
                         ignore_prefix = args
 
-                self.funDict[source] = createFormatFunction(target, header_line, ignore_prefix)
+                self.funDict[source] = createFormatFunction(source, target, header_line, ignore_prefix)
 
 
 
@@ -54,8 +54,55 @@ class Formater:
             data = f.read()
             return self.funcDict[extension](data)
 
-def createFormatFunction(target, source='', header_line=0, ignore_prefix='', replace=[]):
+##############################################################################################
+
+def findNthOccurences(l, n, element):
+    """
+    Find the index of the n-th occurrence of element in l
+    """
+
+
+    size = len(element)
+    count = 0
+
+    for i in range(0, len(l), size):
+        if l[i:i+size] == element:
+            count +=1
+            
+        if count == n:
+            return i
+    
+    return -1
+
+def createFormatFunction(source, target, header_line=0, ignore_prefix='', replace=[]):
     """
     Create a function to format a file to a certain target format
     """
-    pass
+    def result(path):
+        """
+        Format function that will be returned by createFormatFunction
+        """
+        name, extension = path.split(".")
+
+        if extension != source:
+            return -1
+        elif extension == target:
+            #nothing to do
+            return 0
+
+        with open(path) as f:
+            data = f.read()
+
+        data = data[findNthOccurences(data, header_line, "\n")::] #Ignore the lines before the headers
+
+        for replacement in replace:
+            old,new = replacement.split("->")
+
+            data = data.replace(old, new)
+
+        with open(name+"."+target, "w") as f:
+            f.write(data)
+
+        return 0
+    
+    return result 
