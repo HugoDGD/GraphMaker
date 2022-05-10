@@ -65,6 +65,9 @@ class Formater:
 
         name,extension = path.split(".")
 
+        if extension in ("data","cart_bd_data", "pol_bd_data"): #already formatted (WIP do a attribute that contains all the target of format function)
+            return path
+
         return self.funcDict[extension](path)
 
 ##############################################################################################
@@ -115,6 +118,7 @@ def createFormatFunction(source, target, sep, header_line=0, x_column=0, ignore_
     def result(path):
         """
         Format function that will be returned by createFormatFunction
+        return the path to the created file (-1 if it failed)
         """
         name, extension = path.split(".")
 
@@ -122,7 +126,7 @@ def createFormatFunction(source, target, sep, header_line=0, x_column=0, ignore_
             return -1
         elif extension == target:
             #nothing to do
-            return 0
+            return path
 
         with open(path) as f:
             data = f.read()
@@ -147,11 +151,11 @@ def createFormatFunction(source, target, sep, header_line=0, x_column=0, ignore_
         with open(name+"."+target, "w") as f:
             f.write(data)
 
-        return 0
+        return name+"."+target
     
     return result 
 
 if __name__ == "__main__":
     f = Formater("format_conversion.txt")
 
-    f.format("Data/integrateur3.bd_lt")
+    f.format("Data/integrateur3.cart_bd_lt")
