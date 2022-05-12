@@ -1,5 +1,5 @@
 format:scp,data|sep:,|header:8|ignore:;|x_column:1|
-format:bd_scp,bd_data|sep:,|header:8|ignore:;|x_column:1|
+format:pol_bd_scp,pol_bd_data|sep:,|header:8|ignore:;|x_column:1|
 format:lt,data|sep:	|header:0|
 format:cart_bd_lt,cart_bd_data|sep:	|header:0|replace:V->Real,Imaginary|
 format:pol_bd_lt,pol_bd_data|sep:	|header:0|replace:V->Magnitude,Phase|
