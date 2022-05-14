@@ -121,7 +121,7 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description='Plot a graph.')
-    parser.add_argument('f', type=str,
+    parser.add_argument('f', metavar="FILENAME", type=str,
                         help='The file to plot')
     parser.add_argument('-t', '--title', type=str, default=None,
                         help='Title of the figure')
@@ -129,18 +129,18 @@ if __name__ == "__main__":
     parser.add_argument('-x', '--x_axis', type=str, default=None,
                         help='Set the name of the x axis')
     parser.add_argument('--x_lim', nargs='+', type=float, default=None,
-                        help='Limit of the x axis')
+                        help='Limits of the x axis (list of 2 floats)')
 
     parser.add_argument('-y','--y_axis', type=str, default=None,
                         help='Set the name of the y axis')
     parser.add_argument('--y_lim', nargs='+', type=float, default=None,
-                        help='Limit of the x axis')
+                        help='Limits of the y axis (list of 2 floats)')
 
     parser.add_argument('-l', '--labels', nargs='+', type=str, default=None,
-                        help='Labels of the signals')
+                        help='Labels of the signals in the same order than the input file headers (without the x axis)')
 
     parser.add_argument('-r', '--remove', nargs='+', type=int, default=None,
-                        help='Indexes of signal that will be removed (0 is the index of the x-axis)')
+                        help='Indexes of signal that will be removed (0 is the index of the x-axis). The signals will be renamed after the removing so name them accordingly')
     
 
     args = parser.parse_args()
