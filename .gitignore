@@ -1,1 +1,24 @@
-Data/
+__pycache__
+
+#Data formats
+*.data
+*.pol_bd_data
+*.cart_bd_data
+
+#Input formats
+*.scp
+*.pol_bd_scp
+*.cart_bd_scp
+
+*.lt
+*.pol_bd_lt
+*.cart_bd_lt
+
+#Random data formats
+*.txt
+*.csv
+*.pkl
+
+#Output formats
+*.pdf
+*.pgf
