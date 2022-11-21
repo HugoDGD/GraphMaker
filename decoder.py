@@ -43,7 +43,7 @@ def decodeCartBodeData(path):
 
             imgColumn = data.iloc[:,i]+1j*data.iloc[:,i+1]
 
-            data.iloc[:,i] = np.abs(imgColumn) #Magnitude
+            data.iloc[:,i] = 20*np.log10(np.abs(imgColumn)) #Magnitude
             data.iloc[:,i+1] = np.rad2deg(np.angle(imgColumn)) #Phase
 
             i+=2

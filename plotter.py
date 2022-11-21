@@ -18,7 +18,7 @@ def bodePlot(df, visuals=None):
     phases = df.columns[2::2]
 
     if len(magnitudes != 0):
-        df.plot(x=0, y=magnitudes, ax=ax, loglog=True, fontsize=16)
+        df.plot(x=0, y=magnitudes, ax=ax, logx=True, fontsize=16)
     if len(phases != 0):
         df.plot(x=0, y=phases, ax=ax2, linestyle="dotted", logx=True, fontsize=16)
 
@@ -37,10 +37,16 @@ def bodePlot(df, visuals=None):
     if len(phases != 0):
         ax2.legend(loc="upper right", fontsize=24)
     
+    from matplotlib.ticker import StrMethodFormatter, FormatStrFormatter
+    ax.yaxis.set_major_formatter(StrMethodFormatter('{x:.0f}'))
+    plt.tick_params(axis='y', which='minor')
+    ax.yaxis.set_minor_formatter(FormatStrFormatter("%.1f"))
+
+
     # ax2.set_ylim(bottom=0)
 
     # ax.set_xticks(fontsize=12)
-    # ax.set_yticks(fontsize=12)
+    # ax.set_yticks(range(0,21), fontsize=12)
     # ax2.set_yticks(fontsize=12)
 
 def plot(df, visuals=None):
