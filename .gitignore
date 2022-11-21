@@ -6,6 +6,7 @@ __pycache__
 *.cart_bd_data
 
 #Input formats
+*.pisko
 *.scp
 *.pol_bd_scp
 *.cart_bd_scp

@@ -4,3 +4,4 @@ format:lt,data|sep:	|header:0|
 format:cart_bd_lt,cart_bd_data|sep:	|header:0|replace:V->Real,Imaginary|
 format:pol_bd_lt,pol_bd_data|sep:	|header:0|replace:V->Magnitude,Phase|
 format:csv,data|sep:;|header:0|
+format:pisko,data|replace:,->. + ;->,|header:2|

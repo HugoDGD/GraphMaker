@@ -19,6 +19,8 @@
 ## Supported Formats
 * **.csv**: A csv with headers on the first line and the data in columns below them
 
+* **.pisko**: A voltage graph from [Picoscope](https://www.picotech.com/downloads)
+
 * **.scp**: a voltage graph from [Scopy](https://wiki.analog.com/university/tools/m2k/scopy)
 * **pol_bd_scp**: a polar Bode diagram from Scopy
 
